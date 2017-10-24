@@ -81,7 +81,11 @@
                 <div class="title m-b-md">
                     Laravel
                 </div>
+                @php
+                    $random_string = md5(microtime());
 
+                    dd($random_string);
+                @endphp
                 <div class="links">
                     <a href="https://laravel.com/docs">Documentation</a>
                     <a href="https://laracasts.com">Laracasts</a>
