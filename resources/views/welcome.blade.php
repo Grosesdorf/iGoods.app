@@ -82,9 +82,8 @@
                     Laravel
                 </div>
                 @php
-                    $random_string = md5(microtime());
 
-                    dd($random_string);
+                    dd(4 . mt_rand(100000,999999) . mt_rand(100000,999999));
                 @endphp
                 <div class="links">
                     <a href="https://laravel.com/docs">Documentation</a>

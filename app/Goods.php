@@ -9,12 +9,8 @@ class Goods extends Model
     public $incrementing = false;
     public $timestamps = false;
 
-    public static function boot()
+    public function setIdAttribute()
     {
-        parent::boot();
-        static::creating(function ($goods)
-        {
-            $goods->id = md5(microtime());
-        });
+        $this->attributes['id'] = md5(microtime());
     }
 }
