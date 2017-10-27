@@ -88,7 +88,8 @@
                         </div>
                         <div class="col-md-10 form-group">
                             <figure class="figure text-center">
-                                <img src="{{ asset('storage/img/'.$goods->image) }}" class="figure-img img-fluid rounded" style="width: 200px; height: 200px;" alt="{{ $goods->name }}">
+                                <a href="{{ asset('img/'.$goods->image) }}" target="_blank"><img src="{{ asset('img/'.$goods->image) }}" class="figure-img img-fluid rounded" style="width: 200px; height: 200px;" alt="{{ $goods->name }}"></a>
+                                <input type="hidden" name="img_name_old" value="{{ $goods->image }}">
                             </figure>
                         </div>
                         <div class="col-md-10 form-group">

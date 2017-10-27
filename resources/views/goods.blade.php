@@ -27,7 +27,7 @@
                         <div class="card-body">
                             <p class="card-text">{{ $item->name }}</p>
                         </div>
-                        <img class="card-img-top" src="{{ asset('storage/img/'.$item->image) }}" alt="{{ $item->name }}">
+                        <a href="{{ asset('img/'.$item->image) }}" target="_blank"><img class="card-img-top" src="{{ asset('img/'.$item->image) }}" alt="{{ $item->name }}"></a>
                     </div>
                 </td>
                 <td>{{ $item->description }}</td>

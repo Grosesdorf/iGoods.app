@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreGoods;
 use App\Goods;
 use App\Currency;
 use App\Manufacturer;
@@ -10,6 +11,7 @@ use App\Merchant;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Input;
 
 class GoodsController extends Controller
 {
@@ -49,16 +51,23 @@ class GoodsController extends Controller
      *
      * @return Response
      */
-    public function store(Request $request)
+    public function store(StoreGoods $request)
     {
-        $this->validate($request, [
-            'name' => 'required|max:100',
-            'price' => 'required',
-            'EAN' => 'required|max:13',
-        ]);
+        $idGoods = $request->get('id');
+        $imageName = '';
+
+        $file = $request->img_name;
+        if($file)
+        {
+            if($file->isValid())
+            {
+                $imageName = $idGoods . '.' . $request->file('img_name')->getClientOriginalExtension();
+                $request->file('img_name')->move(public_path("/img"), $imageName);
+            }
+        }
 
         $newGoods = new Goods([
-            'id' => $request->get('id'),
+            'id' => $idGoods,
             'name' => $request->get('name'),
             'description'  => $request->get('description'),
             'modified'  => Carbon::now()->toDateTimeString(),
@@ -70,20 +79,21 @@ class GoodsController extends Controller
             'manufacturer_id'  => $request->get('manufacturer_id'),
             'merchant_id'  => $request->get('merchant_id'),
             'ean'  => $request->get('EAN'),
+            'image' => $imageName,
         ]);
 
-        $file = $request->img_name;
-        if($file->isValid())
+        $result = $newGoods->save();
+
+        if($result)
         {
-            $imageName = $newGoods['id'] . '.' . $request->file('img_name')->getClientOriginalExtension();
-            $newGoods['image'] = $imageName;
-            $request->img_name->storeAs('public/img', $imageName);
+            Session::flash('message', "Goods added!");
+        }
+        else
+        {
+            Session::flash('message', "Wrong!");
         }
 
-        $newGoods->save();
-
-        Session::flash('message', "Goods added!");
-        return redirect()->route('goods.show', ['id' => $newGoods['id']]);
+        return redirect()->route('goods.show', ['id' => $idGoods]);
     }
 
     /**
@@ -124,17 +134,21 @@ class GoodsController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function update(Request $request)
+    public function update(StoreGoods $request)
     {
-        $this->validate($request, [
-            'name' => 'required|max:100',
-            'price' => 'required',
-            'EAN' => 'required|max:13',
-        ]);
+        $imageName = $request->get('img_name_old');
 
-//        dd('UPDATE');
+        $file = $request->img_name;
+        if($file)
+        {
+            if($file->isValid())
+            {
+                $imageName = $request->get('id') . '.' . $request->file('img_name')->getClientOriginalExtension();
+                $request->file('img_name')->move(public_path("/img"), $imageName);
+            }
+        }
 
-        Goods::where('id', $request->get('id'))
+        $result = Goods::where('id', $request->get('id'))
             ->update([
                 'name' => $request->get('name'),
                 'description'  => $request->get('description'),
@@ -147,19 +161,18 @@ class GoodsController extends Controller
                 'manufacturer_id'  => $request->get('manufacturer_id'),
                 'merchant_id'  => $request->get('merchant_id'),
                 'ean'  => $request->get('EAN'),
+                'image'  => $imageName,
             ]);
 
-        $file = $request->img_name;
-        if($file)
+        if($result)
         {
-            if($file->isValid())
-            {
-                $imageName = $request->get('id') . '.' . $request->file('img_name')->getClientOriginalExtension();
-                $request->img_name->storeAs('public/img', $imageName);
-            }
+            Session::flash('message', "Goods updated!");
+        }
+        else
+        {
+            Session::flash('message', "Wrong!");
         }
 
-        Session::flash('message', "Goods updated!");
         return redirect()->route('goods.show', ['id' => $request->get('id')]);
     }
 

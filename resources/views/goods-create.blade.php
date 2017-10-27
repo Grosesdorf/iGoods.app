@@ -24,7 +24,7 @@
                         </div>
                         <div class="col-md-10 form-group">
                             <label for="name">Name</label>
-                            <input type="text" class="form-control" id="name" name="name">
+                            <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}">
                         </div>
                         <div class="col-md-10 form-group">
                             <label for="modified">Modified</label>
@@ -44,7 +44,7 @@
                         </div>
                         <div class="col-md-10 form-group">
                             <label for="price">Price</label>
-                            <input type="text" class="form-control" id="price" name="price">
+                            <input type="text" class="form-control" id="price" name="price" value="{{ old('price') }}">
                         </div>
                         <div class="col-md-10 form-group">
                             <label for="currency">Currency</label>
@@ -56,7 +56,7 @@
                         </div>
                         <div class="col-md-10 form-group">
                             <label for="description">Description</label>
-                            <textarea class="form-control" id="id" name="description" rows="5"></textarea>
+                            <textarea class="form-control" id="id" name="description" rows="5">{{ old('description') }}</textarea>
                         </div>
                         <div class="col-md-10 form-group">
                             <label for="manufacturer">Manufacturer</label>
@@ -68,7 +68,7 @@
                         </div>
                         <div class="col-md-10 form-group">
                             <label for="ean">EAN</label>
-                            <input type="text" class="form-control" id="ean" name="EAN">
+                            <input type="text" class="form-control" id="ean" name="EAN" value="{{ old('EAN') }}">
                         </div>
                         <div class="col-md-10 form-group">
                             <label for="img-goods">Image (jpeg, jpg, png)</label>
@@ -76,11 +76,11 @@
                         </div>
                         <div class="col-md-10 form-group">
                             <label for="price_old">Price old</label>
-                            <input type="text" class="form-control" id="price_old" name="price_old">
+                            <input type="text" class="form-control" id="price_old" name="price_old" value="{{ old('price_old') }}">
                         </div>
                         <div class="col-md-10 form-group">
                             <label for="shipping_costs">Shipping costs</label>
-                            <input type="text" class="form-control" id="shipping_costs" name="shipping_costs">
+                            <input type="text" class="form-control" id="shipping_costs" name="shipping_costs" value="{{ old('shipping_costs') }}">
                         </div>
                         <div class="col-md-10 form-group">
                             <label for="merchant_category">Merchant category</label>
@@ -101,7 +101,6 @@
                 </form>
             </div>
             <div class="card-footer text-center form-group">
-                {{--<a href="{{ url('/goods')}}" class="btn btn-success">Save</a>--}}
                 <a href="{{ url('/goods')}}" class="btn btn-danger">Cancel</a>
             </div>
         </div>
