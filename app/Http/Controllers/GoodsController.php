@@ -182,9 +182,16 @@ class GoodsController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        Goods::find($id)->delete();
-        return redirect('goods');
+        if($request->ajax())
+        {
+            $result = Goods::find($id)->delete();
+
+            if($result)
+            {
+                return response()->json();
+            }
+        }
     }
 }

@@ -39,15 +39,11 @@
                 <td><a href="{{url('goods',$item->id)}}" class="btn btn-primary btn-sm">Read</a></td>
                 <td><a href="{{route('goods.edit',$item->id)}}" class="btn btn-info btn-sm">Update</a></td>
                 <td>
-                    {!! Form::open(['method' => 'DELETE', 'route'=>['goods.destroy', $item->id]]) !!}
-                    {!! Form::submit('Delete', ['class' => 'btn btn-danger btn-sm']) !!}
-                    {!! Form::close() !!}
+                    <button type="button" id="{{ $item->id }}" data-token="{{ csrf_token() }}" class="btn-delete btn btn-danger btn-sm">Delete</button>
                 </td>
             </tr>
         @endforeach
-
         </tbody>
-
     </table>
     <div class="nav justify-content-center">
         {{ $goods->links() }}
